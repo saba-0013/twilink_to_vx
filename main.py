@@ -25,29 +25,30 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content == USER_ID:
-        messages = [m.content async for m in message.channel.history(limit=2)]
+        messages = [m.content async for m in message.channel.history(limit=10) if m.author != client.user]
         logger.info(messages)
-        if message.author == client.user:
-            pass
+
+        urls = [m for m in messages if "https://" in m]
+        target_message = urls[0]
+        logger.info(target_message)
+
+        if ("https://twitter.com" in target_message):
+            twitter_url = re.search(r"https://twitter.com/.*", target_message).group()
+            edited_url = twitter_url.replace("https://twitter.com", "https://vxtwitter.com")
+            logger.info(f"edited url: {edited_url}")
+
+            await message.channel.send(edited_url)
+        elif ("https://x.com" in target_message):
+            twitter_url = re.search(r"https://x.com/.*", target_message).group()
+            edited_url = twitter_url.replace("https://x.com", "https://vxtwitter.com")
+            logger.info(f"edited url: {edited_url}")
+
+            await message.channel.send(edited_url)
+        # nico
+        elif ("https://nico.ms" in target_message) or ("https://www.nicovideo.jp" in target_message):
+            await message.channel.send('淫夢は恥ずかしいですよ！')
         else:
-            target_message = messages[-1]
-            if ("https://twitter.com" in target_message):
-                twitter_url = re.search(r"https://twitter.com/.*", target_message).group()
-                edited_url = twitter_url.replace("https://twitter.com", "https://vxtwitter.com")
-                logger.info(f"edited url: {edited_url}")
-
-                await message.channel.send(edited_url)
-            elif ("https://x.com" in target_message):
-                twitter_url = re.search(r"https://x.com/.*", target_message).group()
-                edited_url = twitter_url.replace("https://x.com", "https://vtwitter.com")
-                logger.info(f"edited url: {edited_url}")
-
-                await message.channel.send(edited_url)
-            # nico
-            elif ("https://nico.ms" in target_message) or ("https://www.nicovideo.jp" in target_message):
-                await message.channel.send('淫夢は恥ずかしいですよ！')
-            else:
-                await message.channel.send("関係のないことで呼び出さないでください！")
+            await message.channel.send("関係のないことで呼び出さないでください！")
     else:
         pass
 

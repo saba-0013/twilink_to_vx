@@ -3,7 +3,7 @@
 # python venv
 .discord_bot/*
 lib/*
-lib64/*
+lib64
 include/*
 bin/*
-pyenv.cfg
+pyvenv.cfg

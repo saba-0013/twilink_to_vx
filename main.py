@@ -31,13 +31,13 @@ async def on_message(message):
             pass
         else:
             target_message = messages[-1]
-            if ("https://twitter.com" in url_):
+            if ("https://twitter.com" in target_message):
                 twitter_url = re.search(r"https://twitter.com/.*", target_message).group()
                 edited_url = twitter_url.replace("https://twitter.com", "https://vxtwitter.com")
                 logger.info(f"edited url: {edited_url}")
 
                 await message.channel.send(edited_url)
-            elif ("https://x.com" in url_):
+            elif ("https://x.com" in target_message):
                 twitter_url = re.search(r"https://x.com/.*", target_message).group()
                 edited_url = twitter_url.replace("https://x.com", "https://vtwitter.com")
                 logger.info(f"edited url: {edited_url}")

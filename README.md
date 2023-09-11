@@ -1,2 +1,9 @@
 # twilink_to_vx
-discord bot to convert twilink to vx~
+
+最近 Discord に twitter のリンク貼ると低確率でサムネが表示されない
+ので link 投げたら vx にして投稿しなおしてくれるだけの奴作った
+ついでにソラ・ハレワタールであってほしいのでソラ・ハレワタールにした
+
+## How to use
+
+適当に git clone してサーバーに入れて環境変数設定して動かす

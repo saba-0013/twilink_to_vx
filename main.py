@@ -29,27 +29,46 @@ async def on_message(message):
         logger.info(messages)
 
         urls = [m for m in messages if "https://" in m]
-        target_message = urls[0]
-        logger.info(target_message)
+        if urls:
+            target_message = urls[0]
+            logger.info(target_message)
+            if ("https://twitter.com" in target_message):
+                twitter_url = re.search(r"https://twitter.com/.*", target_message).group()
+                edited_url = twitter_url.replace("https://twitter.com", "https://vxtwitter.com")
+                logger.info(f"edited url: {edited_url}")
 
-        if ("https://twitter.com" in target_message):
-            twitter_url = re.search(r"https://twitter.com/.*", target_message).group()
-            edited_url = twitter_url.replace("https://twitter.com", "https://vxtwitter.com")
-            logger.info(f"edited url: {edited_url}")
+                await message.channel.send(edited_url)
+            elif ("https://x.com" in target_message):
+                twitter_url = re.search(r"https://x.com/.*", target_message).group()
+                edited_url = twitter_url.replace("https://x.com", "https://vxtwitter.com")
+                logger.info(f"edited url: {edited_url}")
 
-            await message.channel.send(edited_url)
-        elif ("https://x.com" in target_message):
-            twitter_url = re.search(r"https://x.com/.*", target_message).group()
-            edited_url = twitter_url.replace("https://x.com", "https://vxtwitter.com")
-            logger.info(f"edited url: {edited_url}")
-
-            await message.channel.send(edited_url)
-        # nico
-        elif ("https://nico.ms" in target_message) or ("https://www.nicovideo.jp" in target_message):
-            await message.channel.send('淫夢は恥ずかしいですよ！')
+                await message.channel.send(edited_url)
+            # nico
+            elif ("https://nico.ms" in target_message) or ("https://www.nicovideo.jp" in target_message):
+                await message.channel.send('淫夢は恥ずかしいですよ！')
+            else:
+                await message.channel.send("関係のないことで呼び出さないでください！")
         else:
-            await message.channel.send("関係のないことで呼び出さないでください！")
+            pass
     else:
-        pass
+        if "https://" in message.content:
+            target_message = message.content
+            logger.info(target_message)
+            if ("https://twitter.com" in target_message):
+                twitter_url = re.search(r"https://twitter.com/.*", target_message).group()
+                edited_url = twitter_url.replace("https://twitter.com", "https://vxtwitter.com")
+                logger.info(f"edited url: {edited_url}")
+
+                await message.channel.send(edited_url)
+            elif ("https://x.com" in target_message):
+                twitter_url = re.search(r"https://x.com/.*", target_message).group()
+                edited_url = twitter_url.replace("https://x.com", "https://vxtwitter.com")
+                logger.info(f"edited url: {edited_url}")
+
+                await message.channel.send(edited_url)
+        else:
+            pass
+
 
 client.run(CLIENT_TOKEN)

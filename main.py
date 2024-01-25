@@ -33,16 +33,16 @@ async def on_message(message):
     logger.info(message.content)
     if message.content == USER_ID:
         """
-        メンションを飛ばされた場合は過去10件のメッセージ履歴をさかのぼって最新のリンクを参照
+        メンションを飛ばされた場合は過去5件のメッセージ履歴をさかのぼって最新のリンクを参照
         """
-        messages = [m.content async for m in message.channel.history(limit=10) if m.author != client.user]
+        messages = [m.content async for m in message.channel.history(limit=5) if m.author != client.user]
         logger.info(messages)
 
         urls = [m for m in messages if "https://" in m]
         if urls:
             target_message = urls[0]
             logger.info(target_message)
-            await utils.generate_vxlink(message, target_message)
+            await utils.generate_vxlink(message, target_message, type_="mention")
         else:
             await message.channel.send("関係のないことで呼び出さないでください！")
 

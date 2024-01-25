@@ -24,6 +24,7 @@ async def generate_vxlink(message_obj, url_message, type_="auto"):
         edited_url = twitter_url.replace("https://twitter.com", "https://vxtwitter.com")
         logger.info(f"edited url: {edited_url}")
 
+        await message_obj.channel.send(message_obj.author)
         await message_obj.channel.send(edited_url)
         if type_ == "auto":
             await message_obj.delete()
@@ -36,6 +37,7 @@ async def generate_vxlink(message_obj, url_message, type_="auto"):
         edited_url = twitter_url.replace("https://x.com", "https://vxtwitter.com")
         logger.info(f"edited url: {edited_url}")
 
+        await message_obj.channel.send(message_obj.author)
         await message_obj.channel.send(edited_url)
         if type_ == "auto":
             await message_obj.delete()
